@@ -1,8 +1,8 @@
-package molinov.weather
+package molinov.weather.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import molinov.weather.ui.main.MainFragment
+import molinov.weather.R
 
 class MainActivity : AppCompatActivity() {
 
