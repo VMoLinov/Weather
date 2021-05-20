@@ -19,26 +19,32 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
+    private var isDataSetRus = true
     private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
         override fun onItemViewClick(weather: Weather) {
-            val manager = activity?.supportFragmentManager
-            if (manager != null) {
-                val bundle = Bundle()
-                bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
-                manager.beginTransaction()
-                    .replace(R.id.container, DetailsFragment.newInstance(bundle))
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
-            }
+            val bundle = Bundle()
+            bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                .addToBackStack("")
+                .commitAllowingStateLoss()
         }
     })
-    private var isDataSetRus = true
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(BUNDLE_BOOLEAN, isDataSetRus)
+        super.onSaveInstanceState(outState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        savedInstanceState?.let { isDataSetRus = it.getBoolean(BUNDLE_BOOLEAN) }
+//        if (savedInstanceState != null) isDataSetRus =
+//            savedInstanceState.getBoolean(BUNDLE_BOOLEAN)// ?: true
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -97,6 +103,7 @@ class MainFragment : Fragment() {
     }
 
     companion object {
+        const val BUNDLE_BOOLEAN = "main"
         fun newInstance() = MainFragment()
     }
 
