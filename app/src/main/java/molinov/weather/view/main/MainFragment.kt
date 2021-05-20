@@ -49,18 +49,24 @@ class MainFragment : Fragment() {
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        viewModel.getWeatherFromLocalSourceRus()
+        if (isDataSetRus) setDataRus()
+        else setDataWorld()
     }
 
     private fun changeWeatherDataSet() {
-        if (isDataSetRus) {
-            viewModel.getWeatherFromLocalSourceWorld()
-            binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
-        } else {
-            viewModel.getWeatherFromLocalSourceRus()
-            binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
-        }
+        if (isDataSetRus) setDataWorld()
+        else setDataRus()
         isDataSetRus = !isDataSetRus
+    }
+
+    private fun setDataRus() {
+        viewModel.getWeatherFromLocalSourceRus()
+        binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+    }
+
+    private fun setDataWorld() {
+        viewModel.getWeatherFromLocalSourceWorld()
+        binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
     }
 
     private fun renderData(appState: AppState) {
