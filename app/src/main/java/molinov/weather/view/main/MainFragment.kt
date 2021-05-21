@@ -43,8 +43,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         savedInstanceState?.let { isDataSetRus = it.getBoolean(BUNDLE_BOOLEAN) }
-//        if (savedInstanceState != null) isDataSetRus =
-//            savedInstanceState.getBoolean(BUNDLE_BOOLEAN)// ?: true
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
