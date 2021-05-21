@@ -3,4 +3,8 @@
     <string name="feels_like">Feels like</string>
     <string name="temperature">Temperature</string>
     <string name="city_coordinates">lt/ln: %s, %s</string>
+    <string name="error">Loading error</string>
+    <string name="reload">reload</string>
+    <string name="todo">TODO</string>
+    <string name="locations">locations</string>
 </resources>
