@@ -1,5 +1,6 @@
 package molinov.weather.view.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -100,13 +101,22 @@ class MainFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ShowToast")
     private fun View.showSnackBar(
         text: String,
         actionText: String,
         action: (View) -> Unit,
         length: Int = Snackbar.LENGTH_INDEFINITE
     ) {
-        Snackbar.make(this, text, length).setAction(actionText, action).show()
+        Snackbar.make(this, text, length)
+            .setBlueColor()
+            .setAction(actionText, action)
+            .show()
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun Snackbar.setBlueColor(): Snackbar {
+        return this.setBackgroundTint(R.color.blue)
     }
 
     interface OnItemViewClickListener {
