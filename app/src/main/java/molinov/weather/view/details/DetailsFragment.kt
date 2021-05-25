@@ -36,17 +36,17 @@ class DetailsFragment : Fragment() {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val weather = arguments?.getParcelable<Weather>(BUNDLE_EXTRA)
-        if (weather != null) {
-            val city = weather.city
-            binding.currentCity.text = city.city
-            binding.coordinates.text = String.format(
-                getString(R.string.city_coordinates),
-                city.lat.toString(),
-                city.lon.toString()
-            )
-            binding.temperature.text = weather.temperature.toString()
-            binding.feelsLike.text = weather.feelsLike.toString()
+        arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let { weather ->
+            weather.city.also { city ->
+                binding.currentCity.text = city.city
+                binding.coordinates.text = String.format(
+                    getString(R.string.city_coordinates),
+                    city.lat.toString(),
+                    city.lon.toString()
+                )
+                binding.temperature.text = weather.temperature.toString()
+                binding.feelsLike.text = weather.feelsLike.toString()
+            }
         }
     }
 
@@ -54,45 +54,4 @@ class DetailsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-/*
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        viewModel.getWeatherFromLocalSource()
-    }
-
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                val weatherData = appState.weatherData
-                loadingLayout.visibility = View.GONE
-                mainView.visibility = View.VISIBLE
-                setData(weatherData)
-                Snackbar.make(mainView, "Success", Snackbar.LENGTH_LONG).show()
-            }
-            is AppState.Loading -> {
-                loadingLayout.visibility = View.VISIBLE
-            }
-            is AppState.Error -> {
-                loadingLayout.visibility = View.GONE
-                mainView.visibility = View.GONE
-                Snackbar
-                    .make(mainView, "Load data error", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Reload") { viewModel.getWeatherFromLocalSource() }
-                    .show()
-            }
-        }
-    }
-
-    private fun setData(weatherData: Weather) {
-        currentCity.text = weatherData.city.city
-        coordinates.text = String.format(
-            getString(R.string.city_coordinates),
-            weatherData.city.lat.toString(),
-            weatherData.city.lon.toString()
-        )
-        temperature.text = weatherData.temperature.toString()
-        feelsLike.text = weatherData.feelsLike.toString()
-    }*/
 }
