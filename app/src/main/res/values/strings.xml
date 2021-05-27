@@ -7,4 +7,6 @@
     <string name="reload">reload</string>
     <string name="todo">TODO</string>
     <string name="locations">locations</string>
+    <string name="geekbrains_ru">https://geekbrains.ru/</string>
+    <string name="ok">ok</string>
 </resources>
