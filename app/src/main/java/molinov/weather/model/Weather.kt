@@ -41,3 +41,13 @@ fun getRussianCities(): List<Weather> {
         Weather(City("Уфа", 54.7387621, 55.972055400000045), 19, 20)
     )
 }
+
+data class WeatherDTO(
+    val fact: FactDTO?
+)
+
+data class FactDTO(
+    val temp: Int?,
+    val feels_like: Int?,
+    val condition: String?
+)

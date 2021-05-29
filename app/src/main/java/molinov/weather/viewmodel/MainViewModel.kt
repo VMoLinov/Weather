@@ -24,16 +24,16 @@ class MainViewModel(
         liveDataToObserve.value = AppState.Loading
         Thread {
             sleep(1000)
-            if (!Random.nextBoolean()) {
-                liveDataToObserve.postValue(AppState.Error(Exception()))
-            } else {
+//            if (!Random.nextBoolean()) {
+//                liveDataToObserve.postValue(AppState.Error(Exception()))
+//            } else {
                 liveDataToObserve.postValue(
                     AppState.Success(
                         if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus()
                         else repositoryImpl.getWeatherFromLocalStorageWorld()
                     )
                 )
-            }
+//            }
         }.start()
     }
 }
