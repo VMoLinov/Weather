@@ -1,28 +1,36 @@
 package molinov.weather.view.details
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import molinov.weather.R
 import molinov.weather.databinding.FragmentDetailsBinding
 import molinov.weather.model.Weather
+import molinov.weather.model.WeatherDTO
 
 class DetailsFragment : Fragment() {
 
-    companion object {
-        const val BUNDLE_EXTRA = "weather"
-        fun newInstance(bundle: Bundle): DetailsFragment {
-            val fragment = DetailsFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var weatherBundle: Weather
+    private val onLoadListener: WeatherLoader.WeatherLoaderListener =
+        object : WeatherLoader.WeatherLoaderListener {
+
+            override fun onLoaded(weatherDTO: WeatherDTO) {
+                displayWeather(weatherDTO)
+            }
+
+            override fun onFailed(throwable: Throwable) {
+                showError()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,25 +41,52 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let { weather ->
-            weather.city.also { city ->
-                binding.currentCity.text = city.city
-                binding.coordinates.text = String.format(
-                    getString(R.string.city_coordinates),
-                    city.lat.toString(),
-                    city.lon.toString()
-                )
-                binding.temperature.text = weather.temperature.toString()
-                binding.feelsLike.text = weather.feelsLike.toString()
-            }
+        weatherBundle = arguments?.getParcelable(BUNDLE_EXTRA) ?: Weather()
+        binding.mainView.visibility = View.GONE
+        binding.loadingLayout.visibility = View.VISIBLE
+        val loader = WeatherLoader(onLoadListener, weatherBundle.city.lat, weatherBundle.city.lon)
+        loader.loadWeather()
+    }
+
+    private fun displayWeather(weatherDTO: WeatherDTO) {
+        with(binding) {
+            mainView.visibility = View.VISIBLE
+            loadingLayout.visibility = View.GONE
+            val city = weatherBundle.city
+            currentCity.text = city.city
+            coordinates.text = String.format(
+                getString(R.string.city_coordinates),
+                city.lat.toString(),
+                city.lon.toString()
+            )
+            weatherCondition.text = weatherDTO.fact?.condition
+            temperature.text = weatherDTO.fact?.temp.toString()
+            feelsLike.text = weatherDTO.fact?.feels_like.toString()
         }
+    }
+
+    private fun showError() {
+        binding.mainView.visibility = View.GONE
+        binding.loadingLayout.visibility = View.VISIBLE
+        Snackbar.make(binding.mainDetailsFragmentRoot, getString(R.string.error), Snackbar.LENGTH_LONG)
+            .show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val BUNDLE_EXTRA = "weather"
+        fun newInstance(bundle: Bundle): DetailsFragment {
+            val fragment = DetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }
