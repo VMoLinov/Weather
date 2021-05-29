@@ -1,6 +1,7 @@
 package molinov.weather.view.details
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import molinov.weather.R
 import molinov.weather.databinding.FragmentDetailsBinding
 import molinov.weather.model.Weather
 import molinov.weather.model.WeatherDTO
-import molinov.weather.model.WeatherLoader
 
 class DetailsFragment : Fragment() {
 
@@ -27,7 +28,7 @@ class DetailsFragment : Fragment() {
             }
 
             override fun onFailed(throwable: Throwable) {
-                TODO("Not yet implemented")
+                showError()
             }
         }
 
@@ -51,8 +52,6 @@ class DetailsFragment : Fragment() {
         loader.loadWeather()
     }
 
-
-
     private fun displayWeather(weatherDTO: WeatherDTO) {
         with(binding) {
             mainView.visibility = View.VISIBLE
@@ -68,6 +67,13 @@ class DetailsFragment : Fragment() {
             temperature.text = weatherDTO.fact?.temp.toString()
             feelsLike.text = weatherDTO.fact?.feels_like.toString()
         }
+    }
+
+    private fun showError() {
+        binding.mainView.visibility = View.GONE
+        binding.loadingLayout.visibility = View.VISIBLE
+        Snackbar.make(binding.mainDetailsFragmentRoot, getString(R.string.error), Snackbar.LENGTH_LONG)
+            .show()
     }
 
     override fun onDestroyView() {
