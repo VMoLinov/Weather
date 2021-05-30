@@ -12,13 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import molinov.weather.R
 import molinov.weather.databinding.FragmentThreadsBinding
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 const val TEST_BROADCAST_INTENT_FILTER = "TEST BROADCAST INTENT FILTER"
-const val THREADS_FRAGMENT_BROADCAST_EXTRA = "THREADS FRAGMENT EXTRA"
+const val THREADS_FRAGMENT_BROADCAST_EXTRA = "THREADS_FRAGMENT_EXTRA"
 
 class ThreadsFragment : Fragment() {
 
@@ -27,17 +28,24 @@ class ThreadsFragment : Fragment() {
     private var counterThread = 0
     private val testReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            addView(context, intent.getStringExtra(THREADS_FRAGMENT_BROADCAST_EXTRA))
+            intent.getStringExtra(THREADS_FRAGMENT_BROADCAST_EXTRA)?.let {
+//                addView(context, it)
+            }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        context?.registerReceiver(testReceiver, IntentFilter(TEST_BROADCAST_INTENT_FILTER))
+        context?.let {
+            LocalBroadcastManager.getInstance(it)
+                .registerReceiver(testReceiver, IntentFilter(TEST_BROADCAST_INTENT_FILTER))
+        }
     }
 
     override fun onDestroy() {
-        context?.unregisterReceiver(testReceiver)
+        context?.let {
+            LocalBroadcastManager.getInstance(it).unregisterReceiver(testReceiver)
+        }
         super.onDestroy()
     }
 

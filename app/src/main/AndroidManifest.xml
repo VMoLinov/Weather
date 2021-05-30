@@ -19,9 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".view.experiments.MainService"
             tools:ignore="Instantiatable" />
+        <service android:name=".view.details.DetailsService" />
 
         <receiver android:name=".view.experiments.MainBroadcastReceiver">
             <intent-filter>
