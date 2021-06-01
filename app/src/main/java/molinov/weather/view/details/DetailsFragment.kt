@@ -38,13 +38,10 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         weatherBundle = arguments?.getParcelable(BUNDLE_EXTRA) ?: Weather()
-        viewModel.getLiveData().observe(viewLifecycleOwner, {
+        viewModel.detailsLiveData.observe(viewLifecycleOwner, {
             renderData(it)
         })
-        viewModel.getWeatherFromRemoteSource(
-            MAIN_LINK +
-                    "lat=${weatherBundle.city.lat}&lon= ${weatherBundle.city.lon}"
-        )
+        viewModel.getWeatherFromRemoteSource(weatherBundle.city.lat, weatherBundle.city.lon)
     }
 
     private fun renderData(appState: AppState) {
@@ -66,8 +63,8 @@ class DetailsFragment : Fragment() {
                     getString(R.string.reload),
                     {
                         viewModel.getWeatherFromRemoteSource(
-                            MAIN_LINK +
-                                    "lat=${weatherBundle.city.lat}&lon=${weatherBundle.city.lon}"
+                            weatherBundle.city.lat,
+                            weatherBundle.city.lon
                         )
                     })
             }

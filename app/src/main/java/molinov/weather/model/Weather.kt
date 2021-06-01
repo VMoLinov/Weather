@@ -8,7 +8,7 @@ data class Weather(
     val city: City = getDefaultCity(),
     val temperature: Int = 0,
     val feelsLike: Int = 0,
-    val condition: String = "sunny"
+    val condition: String = "sunny",
 ) : Parcelable
 
 fun getDefaultCity() = City("Москва", 55.755826, 37.617299900000035)
@@ -42,13 +42,3 @@ fun getRussianCities(): List<Weather> {
         Weather(City("Уфа", 54.7387621, 55.972055400000045), 19, 20)
     )
 }
-
-data class WeatherDTO(
-    val fact: FactDTO?
-)
-
-data class FactDTO(
-    val temp: Int?,
-    val feels_like: Int?,
-    val condition: String?
-)
