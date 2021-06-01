@@ -2,14 +2,12 @@ package molinov.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import molinov.weather.model.Repository
-import molinov.weather.model.RepositoryImpl
+import molinov.weather.repository.DetailsRepositoryImpl
 import java.lang.Thread.sleep
-import kotlin.random.Random
 
 class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    private val repositoryImpl: Repository = RepositoryImpl()
+    private val repositoryImpl: DetailsRepositoryImpl
 ) : ViewModel() {
 
     fun getLiveData() = liveDataToObserve
