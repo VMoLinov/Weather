@@ -1,5 +1,6 @@
 package molinov.weather.view.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import molinov.weather.view.details.DetailsFragment
 import molinov.weather.viewmodel.AppState
 import molinov.weather.viewmodel.MainViewModel
 
+private const val IS_WORLD_KEY = "LIST_OF_TOWNS_KEY"
+
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
@@ -21,7 +24,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
-    private var isDataSetRus = true
+    private var isShowListRus = true
     private val adapter = MainFragmentAdapter(object : OnItemViewClickListener {
         override fun onItemViewClick(weather: Weather) {
             activity?.supportFragmentManager?.apply {
@@ -36,7 +39,7 @@ class MainFragment : Fragment() {
     })
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(BUNDLE_BOOLEAN, isDataSetRus)
+        outState.putBoolean(BUNDLE_BOOLEAN, isShowListRus)
         super.onSaveInstanceState(outState)
     }
 
@@ -45,7 +48,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        savedInstanceState?.let { isDataSetRus = it.getBoolean(BUNDLE_BOOLEAN) }
+        savedInstanceState?.let { isShowListRus = it.getBoolean(BUNDLE_BOOLEAN) }
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,15 +58,21 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecycleView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        weatherDataShow(isDataSetRus)
+        activity?.let {
+            showListOfTowns(
+                it.getPreferences(Context.MODE_PRIVATE).getBoolean(IS_WORLD_KEY, true)
+            )
+        }
     }
+
 
     private fun changeWeatherDataSet() {
-        weatherDataShow(!isDataSetRus)
-        isDataSetRus = !isDataSetRus
+        showListOfTowns(!isShowListRus)
+        isShowListRus = !isShowListRus
+        saveListOfTowns(isShowListRus)
     }
 
-    private fun weatherDataShow(boolean: Boolean) {
+    private fun showListOfTowns(boolean: Boolean) {
         val fab = binding.mainFragmentFAB
         if (boolean) {
             viewModel.getWeatherFromLocalSourceRus()
@@ -71,6 +80,15 @@ class MainFragment : Fragment() {
         } else {
             viewModel.getWeatherFromLocalSourceWorld()
             fab.setImageResource(R.drawable.ic_earth)
+        }
+    }
+
+    private fun saveListOfTowns(showListRus: Boolean) {
+        activity?.let {
+            with(it.getPreferences(Context.MODE_PRIVATE).edit()) {
+                putBoolean(IS_WORLD_KEY, showListRus)
+                apply()
+            }
         }
     }
 
@@ -94,7 +112,7 @@ class MainFragment : Fragment() {
                     mainFragmentRootView.showSnackBar(
                         getString(R.string.error),
                         getString(R.string.reload),
-                        { weatherDataShow(isDataSetRus) }
+                        { showListOfTowns(isShowListRus) }
                     )
                 }
             }

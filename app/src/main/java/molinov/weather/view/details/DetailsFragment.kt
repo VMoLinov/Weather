@@ -82,12 +82,7 @@ class DetailsFragment : Fragment() {
         )
         binding.temperature.text = weather.temperature.toString()
         binding.feelsLike.text = weather.feelsLike.toString()
-//        binding.weatherCondition.text = weather.condition
-        headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png") //Работает ощутимо медленней?
-//        Picasso
-//            .get()
-//            .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
-//            .into(headerIcon)
+        headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
         weather.icon?.let {
             GlideToVectorYou.justLoadImage(
                 activity,
