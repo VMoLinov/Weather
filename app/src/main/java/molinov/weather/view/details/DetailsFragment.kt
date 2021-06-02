@@ -1,11 +1,13 @@
 package molinov.weather.view.details
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 import molinov.weather.R
@@ -79,11 +81,18 @@ class DetailsFragment : Fragment() {
         )
         binding.temperature.text = weather.temperature.toString()
         binding.feelsLike.text = weather.feelsLike.toString()
-        binding.weatherCondition.text = weather.condition
+//        binding.weatherCondition.text = weather.condition
         Picasso
             .get()
             .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
             .into(headerIcon)
+        weather.icon?.let {
+            GlideToVectorYou.justLoadImage(
+                activity,
+                Uri.parse("https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg"),
+                weatherIcon
+            )
+        }
     }
 
     override fun onDestroyView() {

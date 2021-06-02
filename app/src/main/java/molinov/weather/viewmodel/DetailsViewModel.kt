@@ -9,6 +9,7 @@ import molinov.weather.model.getDefaultCity
 import molinov.weather.repository.DetailsRepository
 import molinov.weather.repository.DetailsRepositoryImpl
 import molinov.weather.repository.RemoteDataSource
+import molinov.weather.utils.DataUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,12 +51,7 @@ class DetailsViewModel(
         return if (fact?.temp == null || fact.feels_like == null || fact.condition.isNullOrEmpty()) {
             AppState.Error(Throwable(CORRUPTED_DATA))
         } else {
-            AppState.Success(convertDtoToModel(serverResponse))
+            AppState.Success(DataUtils().convertDtoToModel(serverResponse))
         }
-    }
-
-    private fun convertDtoToModel(weatherDTO: WeatherDTO): List<Weather> {
-        val fact: FactDTO = weatherDTO.fact!!
-        return listOf(Weather(getDefaultCity(), fact.temp!!, fact.feels_like!!, fact.condition!!, fact.icon))
     }
 }
