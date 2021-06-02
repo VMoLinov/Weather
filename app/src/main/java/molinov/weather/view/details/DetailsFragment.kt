@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import coil.api.load
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -14,7 +15,7 @@ import molinov.weather.R
 import molinov.weather.databinding.FragmentDetailsBinding
 import molinov.weather.model.Weather
 import molinov.weather.utils.showSnackBar
-import molinov.weather.view.main.MainAppState
+import molinov.weather.viewmodel.AppState
 import molinov.weather.viewmodel.DetailsViewModel
 
 class DetailsFragment : Fragment() {
@@ -44,18 +45,18 @@ class DetailsFragment : Fragment() {
         viewModel.getWeatherFromRemoteSource(weatherBundle.city.lat, weatherBundle.city.lon)
     }
 
-    private fun renderData(detailsAppState: DetailsAppState) {
-        when (detailsAppState) {
-            is DetailsAppState.Success -> {
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success -> {
                 binding.mainView.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
-                setWeather(detailsAppState.weatherData)
+                setWeather(appState.weatherData as Weather)
             }
-            is DetailsAppState.Loading -> {
+            is AppState.Loading -> {
                 binding.mainView.visibility = View.GONE
                 binding.loadingLayout.visibility = View.VISIBLE
             }
-            is DetailsAppState.Error -> {
+            is AppState.Error -> {
                 binding.mainView.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(
@@ -82,14 +83,15 @@ class DetailsFragment : Fragment() {
         binding.temperature.text = weather.temperature.toString()
         binding.feelsLike.text = weather.feelsLike.toString()
 //        binding.weatherCondition.text = weather.condition
-        Picasso
-            .get()
-            .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
-            .into(headerIcon)
+        headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png") //Работает ощутимо медленней?
+//        Picasso
+//            .get()
+//            .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+//            .into(headerIcon)
         weather.icon?.let {
             GlideToVectorYou.justLoadImage(
                 activity,
-                Uri.parse("https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg"),
+                Uri.parse("https://yastatic.net/weather/i/icons/blueye/color/svg/$it.svg"),
                 weatherIcon
             )
         }

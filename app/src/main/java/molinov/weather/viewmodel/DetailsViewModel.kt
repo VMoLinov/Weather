@@ -7,8 +7,6 @@ import molinov.weather.repository.DetailsRepository
 import molinov.weather.repository.DetailsRepositoryImpl
 import molinov.weather.repository.RemoteDataSource
 import molinov.weather.utils.DataUtils
-import molinov.weather.view.details.DetailsAppState
-import molinov.weather.view.main.MainAppState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,12 +16,12 @@ private const val REQUEST_ERROR = "Ошибка запроса на сервер
 private const val CORRUPTED_DATA = "Неполные данные"
 
 class DetailsViewModel(
-    val detailsLiveData: MutableLiveData<DetailsAppState> = MutableLiveData(),
+    val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
     private val detailsRepositoryImpl: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
 
     fun getWeatherFromRemoteSource(lat: Double, lon: Double) {
-        detailsLiveData.value = DetailsAppState.Loading
+        detailsLiveData.value = AppState.Loading
         detailsRepositoryImpl.getWeatherDetailsFromServer(lat, lon, callback)
     }
 
@@ -35,22 +33,22 @@ class DetailsViewModel(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
                 } else {
-                    DetailsAppState.Error(Throwable(SERVER_ERROR))
+                    AppState.Error(Throwable(SERVER_ERROR))
                 }
             )
         }
 
         override fun onFailure(call: Call<WeatherDTO>, e: Throwable) {
-            detailsLiveData.postValue(DetailsAppState.Error(Throwable(e.message ?: REQUEST_ERROR)))
+            detailsLiveData.postValue(AppState.Error(Throwable(e.message ?: REQUEST_ERROR)))
         }
     }
 
-    private fun checkResponse(serverResponse: WeatherDTO): DetailsAppState {
+    private fun checkResponse(serverResponse: WeatherDTO): AppState {
         val fact = serverResponse.fact
         return if (fact?.temp == null || fact.feels_like == null || fact.condition.isNullOrEmpty()) {
-            DetailsAppState.Error(Throwable(CORRUPTED_DATA))
+            AppState.Error(Throwable(CORRUPTED_DATA))
         } else {
-            DetailsAppState.Success(DataUtils().convertDtoToModel(serverResponse))
+            AppState.Success(DataUtils().convertDtoToModel(serverResponse))
         }
     }
 }

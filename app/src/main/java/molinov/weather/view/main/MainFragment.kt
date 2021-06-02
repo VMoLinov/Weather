@@ -11,6 +11,7 @@ import molinov.weather.R
 import molinov.weather.databinding.FragmentMainBinding
 import molinov.weather.model.Weather
 import molinov.weather.view.details.DetailsFragment
+import molinov.weather.viewmodel.AppState
 import molinov.weather.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -73,19 +74,20 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun renderData(mainAppState: MainAppState) {
-        when (mainAppState) {
-            is MainAppState.Success -> {
+    @Suppress("UNCHECKED_CAST")
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success -> {
                 binding.apply {
                     mainFragmentLoadingLayout.visibility = View.GONE
                     mainFragmentRecycleView.visibility = View.VISIBLE
                 }
-                adapter.setWeather(mainAppState.weatherData)
+                adapter.setWeather(appState.weatherData as List<Weather>)
             }
-            is MainAppState.Loading -> {
+            is AppState.Loading -> {
                 binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
             }
-            is MainAppState.Error -> {
+            is AppState.Error -> {
                 binding.apply {
                     mainFragmentLoadingLayout.visibility = View.GONE
                     mainFragmentRecycleView.visibility = View.GONE
