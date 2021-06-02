@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_details.*
 import molinov.weather.R
 import molinov.weather.databinding.FragmentDetailsBinding
 import molinov.weather.model.Weather
 import molinov.weather.utils.showSnackBar
 import molinov.weather.viewmodel.AppState
 import molinov.weather.viewmodel.DetailsViewModel
-
-private const val PROCESS_ERROR = "Обработка ошибки"
-private const val REQUEST_API_KEY = "X-Yandex-API-Key"
-private const val MAIN_LINK = "https://api.weather.yandex.ru/v2/informers?"
 
 class DetailsFragment : Fragment() {
 
@@ -82,6 +80,10 @@ class DetailsFragment : Fragment() {
         binding.temperature.text = weather.temperature.toString()
         binding.feelsLike.text = weather.feelsLike.toString()
         binding.weatherCondition.text = weather.condition
+        Picasso
+            .get()
+            .load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+            .into(headerIcon)
     }
 
     override fun onDestroyView() {
