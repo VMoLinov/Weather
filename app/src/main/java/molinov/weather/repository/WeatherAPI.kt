@@ -11,6 +11,7 @@ interface WeatherAPI {
     fun getWeather(
         @Header("X-Yandex-API-key") token: String,
         @Query("lat") lat: Double,
-        @Query("lon") lon: Double
+        @Query("lon") lon: Double,
+        @Query("lang") lang: String = "RU_ru"
     ): Call<WeatherDTO>
 }

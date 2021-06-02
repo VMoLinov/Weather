@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 import molinov.weather.R
 import molinov.weather.databinding.FragmentDetailsBinding
+import molinov.weather.model.City
 import molinov.weather.model.Weather
 import molinov.weather.utils.showSnackBar
-import molinov.weather.viewmodel.AppState
+import molinov.weather.app.AppState
 import molinov.weather.viewmodel.DetailsViewModel
 
 class DetailsFragment : Fragment() {
@@ -49,16 +49,16 @@ class DetailsFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 binding.mainView.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 setWeather(appState.weatherData as Weather)
             }
             is AppState.Loading -> {
                 binding.mainView.visibility = View.GONE
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
                 binding.mainView.visibility = View.VISIBLE
-                binding.loadingLayout.visibility = View.GONE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(
                     getString(R.string.error),
                     getString(R.string.reload),
@@ -74,6 +74,7 @@ class DetailsFragment : Fragment() {
 
     private fun setWeather(weather: Weather) {
         val city = weatherBundle.city
+        saveCity(city, weather)
         binding.currentCity.text = city.city
         binding.coordinates.text = String.format(
             getString(R.string.city_coordinates),
@@ -90,6 +91,17 @@ class DetailsFragment : Fragment() {
                 weatherIcon
             )
         }
+    }
+
+    private fun saveCity(city: City, weather: Weather) {
+        viewModel.saveCityToDB(
+            Weather(
+                city,
+                weather.temperature,
+                weather.feelsLike,
+                weather.condition
+            )
+        )
     }
 
     override fun onDestroyView() {

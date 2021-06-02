@@ -12,7 +12,7 @@ import molinov.weather.R
 import molinov.weather.databinding.FragmentMainBinding
 import molinov.weather.model.Weather
 import molinov.weather.view.details.DetailsFragment
-import molinov.weather.viewmodel.AppState
+import molinov.weather.app.AppState
 import molinov.weather.viewmodel.MainViewModel
 
 private const val IS_WORLD_KEY = "LIST_OF_TOWNS_KEY"
@@ -97,17 +97,17 @@ class MainFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 binding.apply {
-                    mainFragmentLoadingLayout.visibility = View.GONE
+                    includedLoadingLayout.loadingLayout.visibility = View.GONE
                     mainFragmentRecycleView.visibility = View.VISIBLE
                 }
                 adapter.setWeather(appState.weatherData as List<Weather>)
             }
             is AppState.Loading -> {
-                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
+                binding.includedLoadingLayout.loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
                 binding.apply {
-                    mainFragmentLoadingLayout.visibility = View.GONE
+                    includedLoadingLayout.loadingLayout.visibility = View.GONE
                     mainFragmentRecycleView.visibility = View.GONE
                     mainFragmentRootView.showSnackBar(
                         getString(R.string.error),

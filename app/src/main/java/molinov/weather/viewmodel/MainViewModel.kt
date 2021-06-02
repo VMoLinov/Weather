@@ -2,6 +2,7 @@ package molinov.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import molinov.weather.app.AppState
 import molinov.weather.repository.MainRepository
 import molinov.weather.repository.MainRepositoryImpl
 
