@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import molinov.weather.repository.MainRepository
 import molinov.weather.repository.MainRepositoryImpl
-import java.lang.Thread.sleep
+import molinov.weather.view.main.MainAppState
 
 class MainViewModel(
-    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
+    private val liveDataToObserve: MutableLiveData<MainAppState> = MutableLiveData(),
     private val repositoryImpl: MainRepository = MainRepositoryImpl()
 ) : ViewModel() {
 
@@ -20,14 +20,14 @@ class MainViewModel(
     fun getWeatherFromRemoteSource() = getDataFromLocalSource(true)
 
     private fun getDataFromLocalSource(isRussian: Boolean) {
-        liveDataToObserve.value = AppState.Loading
+        liveDataToObserve.value = MainAppState.Loading
         Thread {
 //            sleep(1000)
 //            if (!Random.nextBoolean()) {
 //                liveDataToObserve.postValue(AppState.Error(Exception()))
 //            } else {
                 liveDataToObserve.postValue(
-                    AppState.Success(
+                    MainAppState.Success(
                         if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus()
                         else repositoryImpl.getWeatherFromLocalStorageWorld()
                     )

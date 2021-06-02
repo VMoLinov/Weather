@@ -7,8 +7,8 @@ import molinov.weather.model.getDefaultCity
 
 class DataUtils {
 
-    fun convertDtoToModel(weatherDTO: WeatherDTO): List<Weather> {
+    fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {
         val fact: FactDTO = weatherDTO.fact!!
-        return listOf(Weather(getDefaultCity(), fact.temp!!, fact.feels_like!!, fact.condition!!, fact.icon))
+        return Weather(getDefaultCity(), fact.temp!!, fact.feels_like!!, fact.condition!!, fact.icon)
     }
 }

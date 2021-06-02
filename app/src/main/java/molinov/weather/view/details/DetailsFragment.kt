@@ -14,7 +14,7 @@ import molinov.weather.R
 import molinov.weather.databinding.FragmentDetailsBinding
 import molinov.weather.model.Weather
 import molinov.weather.utils.showSnackBar
-import molinov.weather.viewmodel.AppState
+import molinov.weather.view.main.MainAppState
 import molinov.weather.viewmodel.DetailsViewModel
 
 class DetailsFragment : Fragment() {
@@ -44,18 +44,18 @@ class DetailsFragment : Fragment() {
         viewModel.getWeatherFromRemoteSource(weatherBundle.city.lat, weatherBundle.city.lon)
     }
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
+    private fun renderData(detailsAppState: DetailsAppState) {
+        when (detailsAppState) {
+            is DetailsAppState.Success -> {
                 binding.mainView.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
-                setWeather(appState.weatherData[0])
+                setWeather(detailsAppState.weatherData)
             }
-            is AppState.Loading -> {
+            is DetailsAppState.Loading -> {
                 binding.mainView.visibility = View.GONE
                 binding.loadingLayout.visibility = View.VISIBLE
             }
-            is AppState.Error -> {
+            is DetailsAppState.Error -> {
                 binding.mainView.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(

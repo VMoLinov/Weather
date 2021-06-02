@@ -2,14 +2,13 @@ package molinov.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import molinov.weather.model.FactDTO
-import molinov.weather.model.Weather
 import molinov.weather.model.WeatherDTO
-import molinov.weather.model.getDefaultCity
 import molinov.weather.repository.DetailsRepository
 import molinov.weather.repository.DetailsRepositoryImpl
 import molinov.weather.repository.RemoteDataSource
 import molinov.weather.utils.DataUtils
+import molinov.weather.view.details.DetailsAppState
+import molinov.weather.view.main.MainAppState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,12 +18,12 @@ private const val REQUEST_ERROR = "Ошибка запроса на сервер
 private const val CORRUPTED_DATA = "Неполные данные"
 
 class DetailsViewModel(
-    val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
+    val detailsLiveData: MutableLiveData<DetailsAppState> = MutableLiveData(),
     private val detailsRepositoryImpl: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
 
     fun getWeatherFromRemoteSource(lat: Double, lon: Double) {
-        detailsLiveData.value = AppState.Loading
+        detailsLiveData.value = DetailsAppState.Loading
         detailsRepositoryImpl.getWeatherDetailsFromServer(lat, lon, callback)
     }
 
@@ -36,22 +35,22 @@ class DetailsViewModel(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)
                 } else {
-                    AppState.Error(Throwable(SERVER_ERROR))
+                    DetailsAppState.Error(Throwable(SERVER_ERROR))
                 }
             )
         }
 
         override fun onFailure(call: Call<WeatherDTO>, e: Throwable) {
-            detailsLiveData.postValue(AppState.Error(Throwable(e.message ?: REQUEST_ERROR)))
+            detailsLiveData.postValue(DetailsAppState.Error(Throwable(e.message ?: REQUEST_ERROR)))
         }
     }
 
-    private fun checkResponse(serverResponse: WeatherDTO): AppState {
+    private fun checkResponse(serverResponse: WeatherDTO): DetailsAppState {
         val fact = serverResponse.fact
         return if (fact?.temp == null || fact.feels_like == null || fact.condition.isNullOrEmpty()) {
-            AppState.Error(Throwable(CORRUPTED_DATA))
+            DetailsAppState.Error(Throwable(CORRUPTED_DATA))
         } else {
-            AppState.Success(DataUtils().convertDtoToModel(serverResponse))
+            DetailsAppState.Success(DataUtils().convertDtoToModel(serverResponse))
         }
     }
 }
