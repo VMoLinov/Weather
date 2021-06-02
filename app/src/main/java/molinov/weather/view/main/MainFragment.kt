@@ -1,6 +1,5 @@
 package molinov.weather.view.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -75,6 +74,7 @@ class MainFragment : Fragment() {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
@@ -82,7 +82,7 @@ class MainFragment : Fragment() {
                     mainFragmentLoadingLayout.visibility = View.GONE
                     mainFragmentRecycleView.visibility = View.VISIBLE
                 }
-                adapter.setWeather(appState.weatherData)
+                adapter.setWeather(appState.weatherData as List<Weather>)
             }
             is AppState.Loading -> {
                 binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
@@ -101,7 +101,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    @SuppressLint("ShowToast")
     private fun View.showSnackBar(
         text: String,
         actionText: String,
@@ -109,14 +108,8 @@ class MainFragment : Fragment() {
         length: Int = Snackbar.LENGTH_INDEFINITE
     ) {
         Snackbar.make(this, text, length)
-            .setBlueColor()
             .setAction(actionText, action)
             .show()
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private fun Snackbar.setBlueColor(): Snackbar {
-        return this.setBackgroundTint(R.color.blue)
     }
 
     interface OnItemViewClickListener {

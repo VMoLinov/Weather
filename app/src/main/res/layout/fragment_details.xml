@@ -13,6 +13,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/headerIcon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/town_header_height"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/currentCity"
             android:layout_width="wrap_content"
@@ -21,7 +30,7 @@
             android:textSize="@dimen/temperature_value_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerIcon"
             tools:text="current city" />
 
         <TextView
@@ -34,26 +43,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/currentCity" />
 
-        <TextView
-            android:id="@+id/weatherCondition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="@dimen/weather_icon_width"
+            android:layout_height="@dimen/weather_icon_height"
             android:layout_marginTop="@dimen/margin_15_dp"
-            android:textSize="@dimen/feels_like_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/coordinates"
-            tools:text="Forecast" />
+            tools:srcCompat="@drawable/ic_bkn_d" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/weatherCondition"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/margin_15_dp"-->
+        <!--            android:textSize="@dimen/feels_like_text_size"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/coordinates"-->
+        <!--            tools:text="Forecast" />-->
 
         <TextView
             android:id="@+id/temperatureLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/text_fields_padding_top"
             android:text="@string/temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weatherCondition" />
+            app:layout_constraintTop_toBottomOf="@id/weatherIcon" />
+        <!--        android:layout_marginTop="@dimen/weather_icon_margin"-->
 
         <TextView
             android:id="@+id/temperature"

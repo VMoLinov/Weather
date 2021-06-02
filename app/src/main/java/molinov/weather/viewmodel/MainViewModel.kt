@@ -2,14 +2,12 @@ package molinov.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import molinov.weather.model.Repository
-import molinov.weather.model.RepositoryImpl
-import java.lang.Thread.sleep
-import kotlin.random.Random
+import molinov.weather.repository.MainRepository
+import molinov.weather.repository.MainRepositoryImpl
 
 class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    private val repositoryImpl: Repository = RepositoryImpl()
+    private val repositoryImpl: MainRepository = MainRepositoryImpl()
 ) : ViewModel() {
 
     fun getLiveData() = liveDataToObserve
@@ -23,7 +21,7 @@ class MainViewModel(
     private fun getDataFromLocalSource(isRussian: Boolean) {
         liveDataToObserve.value = AppState.Loading
         Thread {
-            sleep(1000)
+//            sleep(1000)
 //            if (!Random.nextBoolean()) {
 //                liveDataToObserve.postValue(AppState.Error(Exception()))
 //            } else {
