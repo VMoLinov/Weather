@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="feels_like">Feels like</string>
-    <string name="temperature">Temperature</string>
+    <string name="feels_like">ощущается</string>
+    <string name="temperature">на улице</string>
     <string name="city_coordinates">lt/ln: %s, %s</string>
-    <string name="error">Loading error</string>
-    <string name="reload">reload</string>
+    <string name="error">Ошибка загрузки</string>
+    <string name="reload">Перезагрузить</string>
     <string name="todo">TODO</string>
     <string name="locations">locations</string>
     <string name="geekbrains_ru">https://geekbrains.ru/</string>
@@ -22,8 +22,10 @@
     <string name="handler_thread">Handler_Thread</string>
     <string name="service">Service</string>
     <string name="service_broadcast">Service + Broadcast</string>
-    <string name="menu_title_history">history</string>
-    <string name="settings">settings</string>
+    <string name="menu_title_history">история</string>
+    <string name="settings">настройки</string>
     <string name="show_pressure">Показывать давление</string>
     <string name="show_wind_speed">Показывать скорость ветра</string>
+    <string name="pressure">давление</string>
+    <string name="wind_speed">ветер</string>
 </resources>

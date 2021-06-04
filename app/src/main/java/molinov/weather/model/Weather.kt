@@ -8,11 +8,33 @@ data class Weather(
     val city: City = getDefaultCity(),
     val temperature: Int = 0,
     val feelsLike: Int = 0,
-    val condition: String = "sunny",
+    val condition: String = "clear",
     val icon: String? = "bkn_n",
     val pressure_mm: Int = 0,
     val wind_speed: Double = 0.0
 ) : Parcelable
+
+val conditionsMap = mapOf(
+    "clear" to "ясно",
+    "partly-cloudy" to "малооблачно",
+    "cloudy" to "облачно с прояснениями",
+    "overcast" to "пасмурно",
+    "drizzle" to "морось",
+    "light - rain" to "небольшой дождь",
+    "rain" to "дождь",
+    "moderate - rain" to "умеренно сильный дождь",
+    "heavy - rain" to "сильный дождь",
+    "continuous - heavy - rain" to "длительный сильный дождь",
+    "showers" to "ливень",
+    "wet - snow" to "дождь со снегом",
+    "light - snow" to "небольшой снег",
+    "snow" to "снег",
+    "snow" to "showers — снегопад",
+    "hail" to "град",
+    "thunderstorm" to "гроза",
+    "thunderstorm - with - rain" to "дождь с грозой",
+    "thunderstorm - with - hail" to "гроза с градом"
+)
 
 fun getDefaultCity() = City("Москва", 55.755826, 37.617299900000035)
 

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_history_recycler_item.view.*
 import molinov.weather.R
 import molinov.weather.model.Weather
+import molinov.weather.model.conditionsMap
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {
 
@@ -40,7 +41,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolde
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 Log.d("itemView", data.toString())
                 itemView.recyclerViewItem.text =
-                    String.format("%s %d %s", data.city.city, data.temperature, data.condition)
+                    String.format("%s %d %s", data.city.city, data.temperature, conditionsMap[data.condition])
                 itemView.setOnClickListener {
                     Toast.makeText(
                         itemView.context, "on click: ${data.city.city}", Toast.LENGTH_SHORT

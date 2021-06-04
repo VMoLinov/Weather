@@ -1,6 +1,7 @@
 package molinov.weather.view.details
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,8 @@ import molinov.weather.model.City
 import molinov.weather.model.Weather
 import molinov.weather.utils.showSnackBar
 import molinov.weather.app.AppState
+import molinov.weather.model.conditionsMap
+import molinov.weather.view.settings.SettingsFragment
 import molinov.weather.viewmodel.DetailsViewModel
 
 class DetailsFragment : Fragment() {
@@ -83,8 +86,9 @@ class DetailsFragment : Fragment() {
             city.lat.toString(),
             city.lon.toString()
         )
-        binding.temperature.text = weather.temperature.toString() + TEMPERATURE
-        binding.feelsLike.text = weather.feelsLike.toString() + TEMPERATURE
+        binding.weatherCondition.text = conditionsMap[weather.condition]
+        binding.temperature.text = weather.temperature.toString() + TEMPERATURE_CONST
+        binding.feelsLike.text = weather.feelsLike.toString() + TEMPERATURE_CONST
         headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
         weather.icon?.let {
             GlideToVectorYou.justLoadImage(
@@ -93,8 +97,17 @@ class DetailsFragment : Fragment() {
                 weatherIcon
             )
         }
-        binding.pressure.text = weather.pressure_mm.toString()
-        binding.windSpeed.text = weather.wind_speed.toString()
+        val sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)
+        if (sharedPreferences != null) {
+            if (sharedPreferences.getBoolean(SettingsFragment.PRESSURE, false)) {
+                binding.pressure.text = weather.pressure_mm.toString() + PRESSURE_CONST
+                binding.pressureLabel.visibility = View.VISIBLE
+            }
+            if (sharedPreferences.getBoolean(SettingsFragment.WIND_SPEED, false)) {
+                binding.windSpeed.text = weather.wind_speed.toString() + WIND_SPEED_CONST
+                binding.windSpeedLabel.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun saveCity(city: City, weather: Weather) {
@@ -114,7 +127,9 @@ class DetailsFragment : Fragment() {
     }
 
     companion object {
-        const val TEMPERATURE = "\u2103"
+        const val PRESSURE_CONST = "мм"
+        const val WIND_SPEED_CONST = "м/с"
+        const val TEMPERATURE_CONST = "\u2103"
         const val BUNDLE_EXTRA = "weather"
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()
