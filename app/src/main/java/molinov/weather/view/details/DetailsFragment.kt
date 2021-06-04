@@ -1,5 +1,6 @@
 package molinov.weather.view.details
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -72,6 +73,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setWeather(weather: Weather) {
         val city = weatherBundle.city
         saveCity(city, weather)
@@ -81,8 +83,8 @@ class DetailsFragment : Fragment() {
             city.lat.toString(),
             city.lon.toString()
         )
-        binding.temperature.text = weather.temperature.toString()
-        binding.feelsLike.text = weather.feelsLike.toString()
+        binding.temperature.text = weather.temperature.toString() + TEMPERATURE
+        binding.feelsLike.text = weather.feelsLike.toString() + TEMPERATURE
         headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
         weather.icon?.let {
             GlideToVectorYou.justLoadImage(
@@ -91,6 +93,8 @@ class DetailsFragment : Fragment() {
                 weatherIcon
             )
         }
+        binding.pressure.text = weather.pressure_mm.toString()
+        binding.windSpeed.text = weather.wind_speed.toString()
     }
 
     private fun saveCity(city: City, weather: Weather) {
@@ -110,6 +114,7 @@ class DetailsFragment : Fragment() {
     }
 
     companion object {
+        const val TEMPERATURE = "\u2103"
         const val BUNDLE_EXTRA = "weather"
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()

@@ -32,7 +32,6 @@
             app:maxImageSize="@dimen/fab_icon_size" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <include
         android:id="@+id/includedLoadingLayout"
         layout="@layout/loading_layout" />

@@ -23,4 +23,7 @@
     <string name="service">Service</string>
     <string name="service_broadcast">Service + Broadcast</string>
     <string name="menu_title_history">history</string>
+    <string name="settings">settings</string>
+    <string name="show_pressure">Показывать давление</string>
+    <string name="show_wind_speed">Показывать скорость ветра</string>
 </resources>

@@ -10,6 +10,7 @@ import molinov.weather.R
 import molinov.weather.databinding.MainActivityBinding
 import molinov.weather.view.history.HistoryFragment
 import molinov.weather.view.main.MainFragment
+import molinov.weather.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,6 +39,15 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.apply {
                     beginTransaction()
                         .replace(R.id.container, HistoryFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
+            R.id.menu_settings -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.container, SettingsFragment.newInstance())
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }

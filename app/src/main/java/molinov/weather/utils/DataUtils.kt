@@ -3,9 +3,17 @@ package molinov.weather.utils
 import molinov.weather.model.*
 import molinov.weather.room.HistoryEntity
 
-fun convertDtoToModel(weatherDTO: WeatherDTO): List<Weather> {
+fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {
     val fact: FactDTO = weatherDTO.fact!!
-    return listOf<Weather>(Weather(getDefaultCity(), fact.temp!!, fact.feels_like!!, fact.condition!!, fact.icon))
+    return Weather(
+        getDefaultCity(),
+        fact.temp!!,
+        fact.feels_like!!,
+        fact.condition!!,
+        fact.icon,
+        fact.pressure_mm!!,
+        fact.wind_speed
+    )
 }
 
 fun convertHistoryEntityToWeather(entityList: List<HistoryEntity>): List<Weather> {

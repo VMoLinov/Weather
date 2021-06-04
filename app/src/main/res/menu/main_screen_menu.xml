@@ -5,5 +5,10 @@
     <item
         android:id="@+id/menu_history"
         android:title="@string/menu_title_history"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/settings"
         app:showAsAction="always" />
 </menu>

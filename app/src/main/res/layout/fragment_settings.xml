@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/settings_start_margin"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/pressureBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15_dp"
+        android:text="@string/show_pressure"
+        android:textSize="@dimen/settings_text_size" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/windSpeedBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15_dp"
+        android:text="@string/show_wind_speed"
+        android:textSize="@dimen/settings_text_size" />
+
+</LinearLayout>
