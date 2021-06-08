@@ -28,4 +28,5 @@
     <string name="show_wind_speed">Показывать скорость ветра</string>
     <string name="pressure">давление</string>
     <string name="wind_speed">ветер</string>
+    <string name="contacts">контакты</string>
 </resources>
