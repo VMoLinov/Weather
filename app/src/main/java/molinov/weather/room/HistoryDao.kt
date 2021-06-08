@@ -9,7 +9,7 @@ interface HistoryDao {
     fun all(): List<HistoryEntity>
 
     @Query("SELECT * FROM HistoryEntity WHERE city LIKE :city")
-    fun getDataByWorld(city: String): List<HistoryEntity>
+    fun getDataByWord(city: String): List<HistoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(entity: HistoryEntity)
@@ -19,4 +19,7 @@ interface HistoryDao {
 
     @Delete
     fun delete(entity: HistoryEntity)
+
+    @Query("DELETE FROM HistoryEntity WHERE id = :id")
+    fun deleteById(id: Long)
 }

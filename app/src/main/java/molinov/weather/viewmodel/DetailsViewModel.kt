@@ -2,7 +2,7 @@ package molinov.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import molinov.weather.app.App.Companion.getHistoryDao
+import molinov.weather.app.App.Companion.history_dao
 import molinov.weather.app.AppState
 import molinov.weather.model.Weather
 import molinov.weather.model.WeatherDTO
@@ -19,7 +19,7 @@ private const val CORRUPTED_DATA = "Неполные данные"
 class DetailsViewModel(
     val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
     private val detailsRepositoryImpl: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource()),
-    private val historyRepository: LocalRepository = LocalRepositoryImpl(getHistoryDao())
+    private val historyRepository: LocalRepository = LocalRepositoryImpl(history_dao)
 ) : ViewModel() {
 
     fun getWeatherFromRemoteSource(lat: Double, lon: Double) {

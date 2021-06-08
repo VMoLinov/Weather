@@ -9,7 +9,7 @@ data class Weather(
     val temperature: Int = 0,
     val feelsLike: Int = 0,
     val condition: String = "clear",
-    val icon: String? = "bkn_n",
+    val icon: String = "bkn_n",
     val pressure_mm: Int = 0,
     val wind_speed: Double = 0.0
 ) : Parcelable

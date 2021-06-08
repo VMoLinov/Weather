@@ -90,7 +90,7 @@ class DetailsFragment : Fragment() {
         binding.temperature.text = weather.temperature.toString() + TEMPERATURE_CONST
         binding.feelsLike.text = weather.feelsLike.toString() + TEMPERATURE_CONST
         headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
-        weather.icon?.let {
+        weather.icon.let {
             GlideToVectorYou.justLoadImage(
                 activity,
                 Uri.parse("https://yastatic.net/weather/i/icons/blueye/color/svg/$it.svg"),
@@ -116,7 +116,10 @@ class DetailsFragment : Fragment() {
                 city,
                 weather.temperature,
                 weather.feelsLike,
-                weather.condition
+                weather.condition,
+                weather.icon,
+                weather.pressure_mm,
+                weather.wind_speed
             )
         )
     }
