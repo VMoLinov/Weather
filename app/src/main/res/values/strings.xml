@@ -29,4 +29,5 @@
     <string name="pressure">давление</string>
     <string name="wind_speed">ветер</string>
     <string name="contacts">контакты</string>
+    <string name="authorities">weather.provider</string>
 </resources>

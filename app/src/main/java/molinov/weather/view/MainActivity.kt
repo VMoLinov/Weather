@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import molinov.weather.R
 import molinov.weather.databinding.MainActivityBinding
-import molinov.weather.view.content_provider.ContentProviderFragment
+import molinov.weather.repository.content_provider.ContentProviderFragment
 import molinov.weather.view.history.HistoryFragment
 import molinov.weather.view.main.MainFragment
 import molinov.weather.view.settings.SettingsFragment

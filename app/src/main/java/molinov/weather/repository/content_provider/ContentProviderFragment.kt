@@ -1,4 +1,4 @@
-package molinov.weather.view.content_provider
+package molinov.weather.repository.content_provider
 
 import android.Manifest
 import android.annotation.SuppressLint
