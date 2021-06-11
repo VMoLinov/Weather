@@ -9,7 +9,6 @@ import android.net.Uri
 import molinov.weather.R
 import molinov.weather.app.App.Companion.history_dao
 import molinov.weather.room.*
-import java.lang.IllegalArgumentException
 
 private const val URI_ALL = 1
 private const val URI_ID = 2

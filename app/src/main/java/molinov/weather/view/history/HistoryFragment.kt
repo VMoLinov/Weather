@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import molinov.weather.R
+import molinov.weather.app.AppState
 import molinov.weather.databinding.FragmentHistoryBinding
 import molinov.weather.model.Weather
 import molinov.weather.utils.showSnackBar
-import molinov.weather.app.AppState
 import molinov.weather.viewmodel.HistoryViewModel
 
 class HistoryFragment : Fragment() {

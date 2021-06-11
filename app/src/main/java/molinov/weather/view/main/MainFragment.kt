@@ -17,16 +17,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import molinov.weather.R
+import molinov.weather.app.AppState
 import molinov.weather.databinding.FragmentMainBinding
+import molinov.weather.model.City
 import molinov.weather.model.Weather
 import molinov.weather.view.details.DetailsFragment
-import molinov.weather.app.AppState
-import molinov.weather.model.City
-import molinov.weather.repository.content_provider.REQUEST_CODE
 import molinov.weather.viewmodel.MainViewModel
 import java.io.IOException
 
 private const val IS_WORLD_KEY = "LIST_OF_TOWNS_KEY"
+private const val REQUEST_CODE = 12345
 private const val REFRESH_PERIOD = 60000L
 private const val MINIMAL_DISTANCE = 100f
 
@@ -76,12 +76,7 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecycleView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener { changeWeatherDataSet() }
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        activity?.let {
-            showListOfTowns(
-                it.getPreferences(Context.MODE_PRIVATE).getBoolean(IS_WORLD_KEY, true)
-            )
-        }
-        binding.mainFragmentFABLocation.setOnClickListener { checkPermission() }
+        showListOfTowns(isShowListRus)
     }
 
     private fun checkPermission() {
@@ -277,6 +272,10 @@ class MainFragment : Fragment() {
     }
 
     private fun showListOfTowns(boolean: Boolean) {
+        activity?.let {
+            it.getPreferences(Context.MODE_PRIVATE).getBoolean(IS_WORLD_KEY, true)
+        }
+        binding.mainFragmentFABLocation.setOnClickListener { checkPermission() }
         val fab = binding.mainFragmentFAB
         if (boolean) {
             viewModel.getWeatherFromLocalSourceRus()
