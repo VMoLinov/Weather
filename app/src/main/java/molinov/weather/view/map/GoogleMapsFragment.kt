@@ -1,5 +1,7 @@
 package molinov.weather.view.map
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
@@ -9,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,6 +38,7 @@ class GoogleMapsFragment : Fragment() {
             addMarkerToArray(latLng)
             drawLine()
         }
+        activateMyLocation(googleMap)
     }
     private lateinit var map: GoogleMap
     private val markers: ArrayList<Marker> = arrayListOf()
@@ -101,7 +105,7 @@ class GoogleMapsFragment : Fragment() {
     private fun initSearchByAddress() {
         binding.buttonSearch.setOnClickListener {
             val geoCoder = Geocoder(it.context)
-            val searchText = binding.searchAddress.toString()
+            val searchText = binding.searchAddress.text.toString()
             Thread {
                 try {
                     val addresses = geoCoder.getFromLocationName(searchText, 1)
@@ -128,6 +132,17 @@ class GoogleMapsFragment : Fragment() {
                     15f
                 )
             )
+        }
+    }
+
+    private fun activateMyLocation(googleMap: GoogleMap) {
+        context?.let {
+            val isPermissionGranted = ContextCompat.checkSelfPermission(
+                it,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+            googleMap.isMyLocationEnabled = isPermissionGranted
+            googleMap.uiSettings.isMyLocationButtonEnabled = isPermissionGranted
         }
     }
 }

@@ -23,3 +23,5 @@ local.properties
 *.pro
 
 apikey.properties
+
+app/src/debug/
