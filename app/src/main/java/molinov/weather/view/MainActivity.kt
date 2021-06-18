@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import molinov.weather.R
 import molinov.weather.databinding.MainActivityBinding
+import molinov.weather.repository.content_provider.ContentProviderFragment
 import molinov.weather.view.history.HistoryFragment
 import molinov.weather.view.main.MainFragment
 import molinov.weather.view.settings.SettingsFragment
@@ -48,6 +49,15 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.apply {
                     beginTransaction()
                         .replace(R.id.container, SettingsFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
+            R.id.menu_content_provider -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.container, ContentProviderFragment.newInstance())
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }

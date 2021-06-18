@@ -4,6 +4,7 @@
     package="molinov.weather">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".app.App"
@@ -13,6 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather">
+        <provider
+            android:name=".repository.content_provider.EducationContentProvider"
+            android:authorities="@string/authorities"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,4 +28,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
