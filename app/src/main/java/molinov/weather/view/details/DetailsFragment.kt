@@ -13,12 +13,12 @@ import coil.api.load
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import kotlinx.android.synthetic.main.fragment_details.*
 import molinov.weather.R
+import molinov.weather.app.AppState
 import molinov.weather.databinding.FragmentDetailsBinding
 import molinov.weather.model.City
 import molinov.weather.model.Weather
-import molinov.weather.utils.showSnackBar
-import molinov.weather.app.AppState
 import molinov.weather.model.conditionsMap
+import molinov.weather.utils.showSnackBar
 import molinov.weather.view.settings.SettingsFragment
 import molinov.weather.viewmodel.DetailsViewModel
 

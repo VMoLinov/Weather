@@ -11,6 +11,7 @@ import molinov.weather.databinding.MainActivityBinding
 import molinov.weather.repository.content_provider.ContentProviderFragment
 import molinov.weather.view.history.HistoryFragment
 import molinov.weather.view.main.MainFragment
+import molinov.weather.view.map.GoogleMapsFragment
 import molinov.weather.view.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +59,15 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.apply {
                     beginTransaction()
                         .replace(R.id.container, ContentProviderFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
+            }
+            R.id.menu_google_maps -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .replace(R.id.container, GoogleMapsFragment())
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }

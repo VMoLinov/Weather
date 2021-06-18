@@ -26,12 +26,12 @@ class MainViewModel(
 //            if (!Random.nextBoolean()) {
 //                liveDataToObserve.postValue(AppState.Error(Exception()))
 //            } else {
-                liveDataToObserve.postValue(
-                    AppState.Success(
-                        if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus()
-                        else repositoryImpl.getWeatherFromLocalStorageWorld()
-                    )
+            liveDataToObserve.postValue(
+                AppState.Success(
+                    if (isRussian) repositoryImpl.getWeatherFromLocalStorageRus()
+                    else repositoryImpl.getWeatherFromLocalStorageWorld()
                 )
+            )
 //            }
         }.start()
     }

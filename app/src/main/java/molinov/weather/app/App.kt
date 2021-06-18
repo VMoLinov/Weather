@@ -19,14 +19,14 @@ class App : Application() {
         private const val DB_NAME = "History.db"
 
         val history_dao by lazy {
-                Room.databaseBuilder(
-                    appInstance.applicationContext,
-                    HistoryDataBase::class.java,
-                    DB_NAME
-                )
-                    .allowMainThreadQueries()
-                    .build()
-                    .historyDao()
+            Room.databaseBuilder(
+                appInstance.applicationContext,
+                HistoryDataBase::class.java,
+                DB_NAME
+            )
+                .allowMainThreadQueries()
+                .build()
+                .historyDao()
         }
 
         fun getHistoryDao(): HistoryDao {

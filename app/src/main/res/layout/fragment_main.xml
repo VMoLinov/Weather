@@ -30,9 +30,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="@dimen/fab_icon_size" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mainFragmentFABLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@id/mainFragmentFAB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="@dimen/fab_location_icon_size" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/includedLoadingLayout"
-        layout="@layout/loading_layout" />
+        layout="@layout/loading_layout"
+        tools:visibility="gone" />
 </FrameLayout>
