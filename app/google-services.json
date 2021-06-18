@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "836362149313",
+    "project_id": "weather-fd3a5",
+    "storage_bucket": "weather-fd3a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836362149313:android:00a06f83382c95cbc3e340",
+        "android_client_info": {
+          "package_name": "molinov.weather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836362149313-mccuvh04ns11hd221qufbfufie3nin8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2pOFIM-OluYHTAflHzC__3I7ekBn4F_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836362149313-mccuvh04ns11hd221qufbfufie3nin8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
