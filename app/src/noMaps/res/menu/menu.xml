@@ -16,8 +16,4 @@
         android:id="@+id/menu_settings"
         android:title="@string/settings"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/menu_google_maps"
-        android:visible="false" />
 </menu>
