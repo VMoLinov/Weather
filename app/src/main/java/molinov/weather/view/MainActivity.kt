@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_screen_menu, menu)
+        menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -64,14 +64,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
-            R.id.menu_google_maps -> {
-                supportFragmentManager.apply {
-                    beginTransaction()
-                        .replace(R.id.container, GoogleMapsFragment())
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
-                true
+                R.id.menu_google_maps -> {
+                    supportFragmentManager.apply {
+                        beginTransaction()
+                            .replace(R.id.container, GoogleMapsFragment())
+                            .addToBackStack("")
+                            .commitAllowingStateLoss()
+                    }
+                    true
             }
             else -> return super.onOptionsItemSelected(item)
         }

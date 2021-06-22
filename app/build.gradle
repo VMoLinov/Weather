@@ -70,13 +70,13 @@ android {
     }
     flavorDimensions 'version'
     productFlavors {
-        freeConfig {
+        googleMaps {
             dimension 'version'
-            versionNameSuffix '.free'
+            versionNameSuffix '.maps'
         }
-        paid {
+        noMaps {
             dimension 'version'
-            versionNameSuffix '.paid'
+            versionNameSuffix '.noMaps'
         }
     }
 }
