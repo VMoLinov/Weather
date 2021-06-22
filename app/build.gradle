@@ -21,6 +21,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile project.rootProject.file("keystore.jks")
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("releasekeys.properties").newDataInputStream())
+            storePassword = properties.getProperty("storePassword", "")
+            keyAlias = properties.getProperty("keyAlias", "")
+            keyPassword = properties.getProperty("keyPassword", "")
+        }
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -34,8 +45,20 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix = "-release"
+            buildConfigField "String", "TYPE", '"RELEASE"'
+        }
+        beta {
+            initWith debug
+            versionNameSuffix = "-beta"
+            buildConfigField "String", "TYPE", '"BETA"'
+        }
+        debug {
+            versionNameSuffix = "-debug"
+            buildConfigField "String", "TYPE", '"DEBUG"'
         }
     }
     compileOptions {
@@ -44,6 +67,17 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    flavorDimensions 'version'
+    productFlavors {
+        freeConfig {
+            dimension 'version'
+            versionNameSuffix '.free'
+        }
+        paid {
+            dimension 'version'
+            versionNameSuffix '.paid'
+        }
     }
 }
 

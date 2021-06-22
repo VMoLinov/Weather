@@ -29,7 +29,7 @@ class ContentProviderFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentContentProviderBinding.inflate(inflater, container, false)
         return binding.root
     }
