@@ -2,7 +2,7 @@ Stack: MVVM, Retrofit, Room, Google API.
 
 - Loading weather from Yandex API
 - handle result
-- UI state (progressbar/result)
+- UI states (Success/loading/error)
 - save history in a localdatabase
 - work with Google maps, set markers and lines
 - build configs and flavors
