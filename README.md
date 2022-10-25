@@ -1,4 +1,4 @@
-Stack: MVVM, Retrofit, Room, Google API.
+Stack: MVVM, Retrofit, okhttp, Room, Google API.
 
 - Loading weather from Yandex API
 - handle result
